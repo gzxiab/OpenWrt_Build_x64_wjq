@@ -17,9 +17,9 @@ sed -i '9a\msgstr "固件出处"' feeds/luci/modules/luci-base/po/zh-cn/base.po
 sed -i '10a \\' feeds/luci/modules/luci-base/po/zh-cn/base.po
 
 # 后台IP设置
-export Ipv4_ipaddr="192.168.1.1"             # 修改openwrt后台地址(填0为关闭)
+export Ipv4_ipaddr="192.168.12.5"             # 修改openwrt后台地址(填0为关闭)
 export Netmask_netm="255.255.255.0"          # IPv4 子网掩码（默认：255.255.255.0）(填0为不作修改)
-export Op_name="OpenWrt-GXNAS"               # 修改主机名称为OpenWrt-123(填0为不作修改)
+export Op_name="OpenWrt"               # 修改主机名称为OpenWrt-123(填0为不作修改)
 
 # 内核和系统分区大小(不是每个机型都可用)
 export Kernel_partition_size="32"            # 内核分区大小,每个机型默认值不一样 (填写您想要的数值,默认一般16,数值以MB计算，填0为不作修改),如果你不懂就填0
@@ -30,11 +30,11 @@ export Mandatory_theme="argon"               # 将bootstrap替换您需要的主
 export Default_theme="argon"                 # 多主题时,选择某主题为默认第一主题 (填写主题名称,填0为不作修改)
 
 # 旁路由选项
-export Gateway_Settings="0"                  # 旁路由设置 IPv4 网关(填入您的网关IP为启用)(填0为不作修改)
-export DNS_Settings="0"                      # 旁路由设置 DNS(填入DNS，多个DNS要用空格分开)(填0为不作修改)
+export Gateway_Settings="192.168.12.1"                  # 旁路由设置 IPv4 网关(填入您的网关IP为启用)(填0为不作修改)
+export DNS_Settings="192.168.12.1 114.114.114.114"                      # 旁路由设置 DNS(填入DNS，多个DNS要用空格分开)(填0为不作修改)
 export Broadcast_Ipv4="0"                    # 设置 IPv4 广播(填入您的IP为启用)(填0为不作修改)
-export Disable_DHCP="0"                      # 旁路由关闭DHCP功能(1为启用命令,填0为不作修改)
-export Disable_Bridge="0"                    # 旁路由去掉桥接模式(1为启用命令,填0为不作修改)
+export Disable_DHCP="1"                      # 旁路由关闭DHCP功能(1为启用命令,填0为不作修改)
+export Disable_Bridge="1"                    # 旁路由去掉桥接模式(1为启用命令,填0为不作修改)
 export Create_Ipv6_Lan="0"                   # 爱快+OP双系统时,爱快接管IPV6,在OP创建IPV6的lan口接收IPV6信息(1为启用命令,填0为不作修改)
 
 # IPV6、IPV4 选择
@@ -45,8 +45,8 @@ export Enable_IPV4_function="1"              # 编译IPV4固件(1为启用命令
 export PassWall_luci_branch="0"              # passwall的源码分别有【luci分支】和【luci-smartdns-new-version分支】(填0为使用luci分支,填1为使用luci-smartdns-new-version分支)
 
 # 替换OpenClash的源码(默认master分支)
-export OpenClash_branch="0"                  # OpenClash的源码分别有【master分支】和【dev分支】(填0为使用master分支,填1为使用dev分支)
-export OpenClash_Core="1"                    # 增加OpenClash时,把核心下载好,(填1为下载【dev单核】,填2为下载【dev/meta/premium三核】,填0为不需要核心)
+export OpenClash_branch="1"                  # OpenClash的源码分别有【master分支】和【dev分支】(填0为使用master分支,填1为使用dev分支)
+export OpenClash_Core="2"                    # 增加OpenClash时,把核心下载好,(填1为下载【dev单核】,填2为下载【dev/meta/premium三核】,填0为不需要核心)
 
 # 个性签名,默认增加年月日[$(TZ=UTC-8 date "+%Y.%m.%d")]
 export Customized_Information="OpenWrt_x64_主路由版 by GXNAS build $(TZ=UTC-8 date "+%Y.%m.%d")"  # 个性签名,你想写啥就写啥，(填0为不作修改)
@@ -100,6 +100,7 @@ export kernel_usage="stable"
 #sed -i 's/"设置向导"/"向导"/g' `egrep "设置向导" -rl ./`
 
 
+#openwrt-x86-64-generic-rootfs.tar.gz
 # 整理固件包时候,删除您不想要的固件或者文件,让它不需要上传到Actions空间(根据编译机型变化,自行调整删除名称)
 cat >"$CLEAR_PATH" <<-EOF
 packages
@@ -115,7 +116,6 @@ profiles.json
 openwrt-x86-64-generic-ext4-combined.img.gz
 openwrt-x86-64-generic-ext4-combined-efi.img.gz
 openwrt-x86-64-generic-ext4-rootfs.img.gz
-openwrt-x86-64-generic-rootfs.tar.gz
 openwrt-x86-64-generic-squashfs-combined.vmdk
 openwrt-x86-64-generic-squashfs-combined-efi.vmdk
 EOF
